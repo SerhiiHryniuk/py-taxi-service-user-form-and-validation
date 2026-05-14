@@ -108,7 +108,10 @@ class DriverLicenseUpdateView(LoginRequiredMixin, generic.UpdateView):
     success_url = reverse_lazy("taxi:driver-list")
 
     def get_success_url(self):
-        return reverse_lazy("taxi:driver-detail", kwargs={"pk": self.object.pk})
+        return reverse_lazy(
+            "taxi:driver-detail",
+            kwargs={"pk": self.object.pk}
+        )
 
 
 def toggle_assign_to_car(request, pk):
@@ -120,4 +123,8 @@ def toggle_assign_to_car(request, pk):
     else:
         car.drivers.add(driver)
 
-    return HttpResponseRedirect(reverse("taxi:car-detail", args=[pk]))
+    return HttpResponseRedirect(
+        reverse(
+            "taxi:car-detail",
+            args=[pk])
+    )

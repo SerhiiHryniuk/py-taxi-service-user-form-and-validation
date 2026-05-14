@@ -9,9 +9,9 @@ from taxi.models import Driver, Car
 
 LICENSE_HELP_TEXT = mark_safe(
     "<ul>"
-        "<li>Your license number should only consist of 8 characters long.</li>"
-        "<li>Your license number's first 3 characters are uppercase letters.</li>"
-        "<li>Your license number's last 5 characters are digits.</li>"
+    "<li>Your license number should only consist of 8 characters long.</li>"
+    "<li>Your license number's first 3 characters are uppercase letters.</li>"
+    "<li>Your license number's last 5 characters are digits.</li>"
     "</ul>"
 )
 
@@ -19,17 +19,17 @@ LICENSE_HELP_TEXT = mark_safe(
 def validate_license_number(license_number):
     if len(license_number) != 8:
         raise ValidationError(
-            f"Ensure that license number should consist of exactly 8 characters."
+            "Ensure that license number consist of exactly 8 characters."
         )
 
     if not (license_number[:3].isupper() and license_number[:3].isalpha()):
         raise ValidationError(
-            f"Ensure that first 3 characters are uppercase letters."
+            "Ensure that first 3 characters are uppercase letters."
         )
 
     if not license_number[-5:].isdigit():
         raise ValidationError(
-            f"Ensure that last 5 characters are digits."
+            "Ensure that last 5 characters are digits."
         )
 
     return license_number
@@ -38,7 +38,11 @@ def validate_license_number(license_number):
 class DriverCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = Driver
-        fields = UserCreationForm.Meta.fields + ("first_name", "last_name", "license_number")
+        fields = UserCreationForm.Meta.fields + (
+            "first_name",
+            "last_name",
+            "license_number"
+        )
         help_texts = {
             "license_number": LICENSE_HELP_TEXT,
         }
@@ -60,7 +64,10 @@ class DriverLicenseUpdateForm(ModelForm):
 
 
 class CarCreationForm(ModelForm):
-    drivers = forms.ModelMultipleChoiceField(queryset=get_user_model().objects.all(), widget=forms.CheckboxSelectMultiple())
+    drivers = forms.ModelMultipleChoiceField(
+        queryset=get_user_model().objects.all(),
+        widget=forms.CheckboxSelectMultiple()
+    )
 
     class Meta:
         model = Car

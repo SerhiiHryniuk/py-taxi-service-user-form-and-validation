@@ -9,13 +9,13 @@ from .views import (
     CarDeleteView,
     DriverListView,
     DriverDetailView,
+    DriverCreateView,
+    DriverDeleteView,
+    DriverLicenseUpdateView,
     ManufacturerListView,
     ManufacturerCreateView,
     ManufacturerUpdateView,
     ManufacturerDeleteView,
-    DriverCreateView,
-    DriverDeleteView,
-    DriverLicenseUpdateView,
     toggle_assign_to_car,
 )
 
@@ -89,7 +89,7 @@ urlpatterns = [
     path(
         "drivers/<int:pk>/update-license/",
         DriverLicenseUpdateView.as_view(),
-        name="driver-license-update"
+        name="driver-update"
     ),
     path(
         "cars/<int:pk>/toggle-assign/",
