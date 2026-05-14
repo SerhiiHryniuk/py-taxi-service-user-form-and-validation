@@ -1,10 +1,11 @@
+from django import forms
+from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
 from django.utils.safestring import mark_safe
 
-from taxi.models import Driver
-
+from taxi.models import Driver, Car
 
 LICENSE_HELP_TEXT = mark_safe(
     "<ul>"
@@ -56,3 +57,11 @@ class DriverLicenseUpdateForm(ModelForm):
 
     def clean_license_number(self):
         return validate_license_number(self.cleaned_data["license_number"])
+
+
+class CarCreationForm(ModelForm):
+    drivers = forms.ModelMultipleChoiceField(queryset=get_user_model().objects.all(), widget=forms.CheckboxSelectMultiple())
+
+    class Meta:
+        model = Car
+        fields = "__all__"
